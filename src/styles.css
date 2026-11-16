@@ -1,0 +1,617 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap');
+
+:root {
+  color: #111;
+  background: #fff;
+  font-family: 'Source Sans Pro', 'Source Sans 3', Arial, sans-serif;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background: #fff;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.page {
+  width: min(940px, calc(100% - 48px)) !important;
+  max-width: 940px !important;
+  margin: 0 auto;
+  padding: 28px 0 42px;
+}
+
+/* Header */
+
+.header {
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.header h1,
+.card h2,
+h3 {
+  font-family: Merriweather, Georgia, 'Times New Roman', serif;
+}
+
+.header h1 {
+  margin: 30px 0 17px;
+  font-size: 34px;
+  line-height: 1.05;
+}
+
+.header strong {
+  display: block;
+  margin-bottom: 18px;
+  font-size: 16px;
+}
+
+.header p {
+  margin: 0 0 15px;
+}
+
+/* Cards and transitions */
+
+.card {
+  margin-top: 26px;
+  padding: 25px 26px 28px;
+  border-radius: 20px !important;
+  background: #fff;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.22),
+    0 2px 6px rgba(0, 0, 0, 0.12) !important;
+  animation: show 0.28s ease-out;
+}
+
+@keyframes show {
+  from {
+    opacity: 0.3;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.card h2 {
+  margin: 25px 0 22px;
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+.description {
+  max-width: 830px;
+  margin: 0 0 22px;
+  line-height: 1.23;
+}
+
+.cover {
+  position: relative;
+  min-height: 405px;
+  padding: 30px 33px;
+}
+
+.cover h2 {
+  margin-top: 0;
+  font-size: 28px;
+}
+
+.cover p {
+  max-width: 785px;
+  margin: 0 0 18px;
+  line-height: 1.25;
+}
+
+.cover ul {
+  margin-top: 22px;
+  padding-left: 25px;
+  line-height: 1.35;
+}
+
+.cover-button {
+  position: absolute;
+  right: 32px;
+  bottom: 36px;
+}
+
+/* Journey progress */
+
+.journey {
+  margin-bottom: 4px;
+}
+
+.journey-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.journey-kicker {
+  color: #478b26;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.journey-top strong {
+  color: #478b26;
+  font-size: 15px;
+}
+
+.journey-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+.journey-track::before {
+  position: absolute;
+  top: 18px;
+  right: 7%;
+  left: 7%;
+  height: 4px;
+  border-radius: 4px;
+  background: #e4e9e1;
+  content: '';
+}
+
+.journey-step {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  color: #8a938c;
+  font-size: 11px;
+  text-align: center;
+}
+
+.journey-node {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 3px solid #e4e9e1;
+  border-radius: 50%;
+  background: #fff;
+  transition: all 0.35s ease;
+}
+
+.journey-node svg {
+  font-size: 20px;
+}
+
+.journey-step.complete {
+  color: #478b26;
+}
+
+.journey-step.complete .journey-node,
+.journey-step.active .journey-node {
+  color: #fff;
+  border-color: #478b26;
+  background: #478b26;
+}
+
+.journey-step.active {
+  color: #173d22;
+  font-weight: 700;
+}
+
+.journey-step.active .journey-node {
+  box-shadow: 0 0 0 7px rgba(71, 139, 38, 0.14);
+  animation: journey-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes journey-pulse {
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 11px rgba(71, 139, 38, 0.04);
+  }
+}
+
+/* Form controls */
+
+h3 {
+  margin: 24px 0;
+  padding: 0 12px 8px;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+input,
+textarea,
+select {
+  display: block;
+  width: 100%;
+  margin: 0 0 12px;
+  padding: 13px 12px;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  background: #fff;
+  color: #111;
+}
+
+input,
+select {
+  height: 45px;
+}
+
+textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder,
+select {
+  color: #62656a;
+  opacity: 1;
+}
+
+.select-wrap {
+  position: relative;
+}
+
+select {
+  padding-right: 44px;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  appearance: none;
+}
+
+.select-arrow {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  color: #333;
+  font-size: 25px !important;
+  pointer-events: none;
+}
+
+.nested {
+  width: calc(100% - 32px);
+  margin-left: 32px;
+}
+
+/* Repeatable sections */
+
+.repeat {
+  position: relative;
+}
+
+.repeat > input:first-of-type {
+  width: calc(100% - 70px);
+  padding-right: 12px;
+}
+
+.repeat.collapsed {
+  min-height: 45px;
+}
+
+.repeat.collapsed input:first-of-type {
+  width: calc(100% - 70px);
+  margin-right: 70px;
+}
+
+.repeat.collapsed > .nested,
+.repeat.collapsed > textarea,
+.repeat.collapsed > select,
+.repeat.collapsed > .household-toggle {
+  display: none;
+}
+
+.collapse-toggle,
+.remove-button {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.collapse-toggle {
+  top: 5px;
+  right: 3px;
+  color: #555;
+}
+
+.remove-button {
+  top: 7px;
+  right: 38px;
+  padding: 4px;
+  color: #a33c32;
+}
+
+.collapse-toggle svg {
+  font-size: 25px;
+}
+
+.remove-button svg {
+  font-size: 20px;
+}
+
+.remove-button:hover {
+  text-decoration: underline;
+}
+
+.household-toggle {
+  margin: -4px 0 8px 2px !important;
+}
+
+.household-toggle .MuiFormControlLabel-label {
+  font-size: 14px;
+}
+
+/* Buttons */
+
+.green-button,
+.add-button {
+  border: 0;
+  border-radius: 12px;
+  background: #478b26;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+
+.green-button:hover,
+.add-button:hover {
+  background: #356d1b;
+}
+
+.green-button:active,
+.add-button:active {
+  transform: translateY(1px);
+}
+
+.green-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 12px 18px;
+  font-size: 14px;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  height: 44px;
+  margin: 2px 0 22px;
+  font-size: 14px;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+}
+
+.nav-buttons .green-button {
+  min-width: 154px;
+  justify-content: center;
+  font-size: 14px;
+}
+
+/* Review */
+
+.review-intro {
+  margin: -5px 0 25px;
+  color: #444;
+}
+
+.review-group {
+  margin: 0 0 26px;
+}
+
+.review-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+}
+
+.review-heading h3 {
+  flex: 1;
+  margin: 0;
+  border-bottom: 0;
+}
+
+.edit-button {
+  padding: 5px 10px;
+  border: 1px solid #478b26;
+  border-radius: 6px;
+  background: #fff;
+  color: #356d1b;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.review-record {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.record-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #356d1b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.review-field {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.7fr) 1.3fr;
+  gap: 12px;
+  padding: 4px 0;
+  font-size: 14px;
+}
+
+.review-field span {
+  color: #666;
+  text-transform: capitalize;
+}
+
+.review-field strong {
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+
+.blank-value {
+  color: #888;
+  font-style: italic;
+  font-weight: 400 !important;
+}
+
+/* Certificate */
+
+.certificate {
+  padding-bottom: 28px;
+}
+
+.certificate h2 {
+  margin-top: 0;
+}
+
+.certificate-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 500px;
+  margin: 33px 10px 28px;
+  border: 3px double #6f8f6c;
+  background: repeating-radial-gradient(
+    circle at center,
+    rgba(90, 145, 90, 0.08) 0 2px,
+    transparent 2px 8px
+  );
+  box-shadow:
+    inset 0 0 0 8px #fff,
+    inset 0 0 0 11px #4e8d55;
+}
+
+.certificate-art span {
+  position: absolute;
+  top: 24px;
+  font-size: 30px;
+  letter-spacing: 0.06em;
+}
+
+.certificate-art strong {
+  position: absolute;
+  top: 43%;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.certificate-art small {
+  position: absolute;
+  bottom: 28px;
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.certificate-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.certificate-buttons .green-button {
+  flex: 1;
+  font-size: 12px;
+}
+
+@media (max-width: 700px) {
+  .page {
+    width: calc(100% - 28px) !important;
+    padding-top: 18px;
+  }
+
+  .header h1 {
+    margin-top: 24px;
+    font-size: 28px;
+  }
+
+  .desktop {
+    display: none;
+  }
+
+  .card {
+    padding: 20px 16px 22px;
+    border-radius: 22px;
+  }
+
+  .cover {
+    min-height: 450px;
+    padding: 23px 20px;
+  }
+
+  .cover-button {
+    right: 20px;
+    bottom: 24px;
+  }
+
+  .journey-track {
+    gap: 3px;
+  }
+
+  .journey-step small {
+    max-width: 58px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .journey-node {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nested {
+    width: calc(100% - 18px);
+    margin-left: 18px;
+  }
+
+  .certificate-art {
+    height: 280px;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .certificate-art span {
+    font-size: 24px;
+  }
+
+  .certificate-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
