@@ -93,9 +93,14 @@ export function Progress({ step }) {
   );
 }
 
-export function Button({ children, onClick, icon, endIcon }) {
+export function Button({ children, onClick, icon, endIcon, disabled = false, type = 'button' }) {
   return (
-    <button className="green-button" onClick={onClick}>
+    <button
+      type={type}
+      className="green-button"
+      onClick={onClick}
+      disabled={disabled}
+    >
       {!endIcon && icon}
       {children}
       {endIcon && icon}

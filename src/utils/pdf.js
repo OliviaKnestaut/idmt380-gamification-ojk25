@@ -1,7 +1,8 @@
 import { jsPDF } from 'jspdf';
 import { autoTable } from 'jspdf-autotable';
+import { PDFDocument, StandardFonts } from 'pdf-lib';
 
-export function downloadPlan(data) {
+export async function downloadPlan(data) {
   const pdf = new jsPDF();
   const margin = 18;
   let y = 20;
@@ -79,14 +80,27 @@ export function downloadPlan(data) {
     y = pdf.lastAutoTable.finalY + 14;
   };
 
-  pdf.setFillColor(19, 52, 35);
-  pdf.rect(0, 0, 210, 34, 'F');
-  pdf.setTextColor(255, 255, 255);
-  pdf.setFont('helvetica', 'bold');
-  pdf.setFontSize(20);
-  pdf.text('Family Emergency Plan', margin, 22);
+  try {
+    const response = await fetch('/PDF-header.png');
+    const blob = await response.blob();
+    const imageUrl = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+    pdf.addImage(imageUrl, 'PNG', 0, 0, 210, 40);
+  } catch {
+    pdf.setFillColor(248, 250, 247);
+    pdf.rect(0, 0, 210, 40, 'F');
+  }
+
   pdf.setTextColor(20, 20, 20);
-  y = 48;
+  pdf.setFont('merriweather', 'bold');
+  pdf.setFontSize(18);
+  pdf.text('Family Emergency Communication Plan', margin, 52);
+  pdf.setTextColor(20, 20, 20);
+  y = 62;
 
   records('Household information', [data.household]);
   records('Family members', data.members);
@@ -128,46 +142,42 @@ export function downloadPlan(data) {
   pdf.save('family-emergency-plan.pdf');
 }
 
-export function downloadCertificate(data) {
-  const pdf = new jsPDF({ orientation: 'landscape' });
-  const householdName =
-    data.members.find((member) => member.name)?.name ||
-    data.household.city ||
-    'Your household';
+export async function createCertificatePdf(name) {
+  const response = await fetch('/Ready-Certificate.pdf');
+  if (!response.ok) throw new Error('Certificate template could not be loaded.');
 
-  pdf.setFillColor(248, 252, 247);
-  pdf.rect(0, 0, 297, 210, 'F');
-  pdf.setLineWidth(3);
-  pdf.setDrawColor(63, 127, 34);
-  pdf.rect(12, 12, 273, 186);
-  pdf.setLineWidth(1);
-  pdf.setDrawColor(168, 198, 155);
-  pdf.rect(18, 18, 261, 174);
-  pdf.setTextColor(32, 71, 37);
-  pdf.setFont('helvetica', 'bold');
-  pdf.setFontSize(15);
-  pdf.text('READY SET PLAN', 148.5, 40, { align: 'center' });
-  pdf.setFont('helvetica', 'normal');
-  pdf.setFontSize(35);
-  pdf.text('Certificate of Preparedness', 148.5, 75, {
-    align: 'center',
+  const template = await PDFDocument.load(await response.arrayBuffer());
+  const page = template.getPage(0);
+  const font = await template.embedFont(StandardFonts.TimesRoman);
+  const boldFont = await template.embedFont(StandardFonts.TimesRomanBold);
+  const { width } = page.getSize();
+  const date = new Date().toLocaleDateString();
+  const trimmedName = name.trim();
+
+  const nameSize = trimmedName.length > 40 ? 72 : trimmedName.length > 25 ? 84 : 100;
+  page.drawText(trimmedName, {
+    x: (width - boldFont.widthOfTextAtSize(trimmedName, nameSize)) / 2,
+    y: 680,
+    size: nameSize,
+    font: boldFont,
   });
-  pdf.setFontSize(16);
-  pdf.text('This certifies that', 148.5, 102, { align: 'center' });
-  pdf.setFont('helvetica', 'bold');
-  pdf.setFontSize(25);
-  pdf.text(householdName, 148.5, 120, { align: 'center' });
-  pdf.setFont('helvetica', 'normal');
-  pdf.setFontSize(13);
-  pdf.text(
-    'has completed a Family Emergency Communication Plan',
-    148.5,
-    141,
-    { align: 'center' },
-  );
-  pdf.setFontSize(10);
-  pdf.text(`Prepared ${new Date().toLocaleDateString()}`, 148.5, 166, {
-    align: 'center',
+  page.drawText(date, {
+    x: 535,
+    y: 175,
+    size: 52,
+    font,
   });
-  pdf.save('ready-household-certificate.pdf');
+
+  const bytes = await template.save();
+  return new Blob([bytes], { type: 'application/pdf' });
+}
+
+export async function downloadCertificate(name) {
+  const blob = await createCertificatePdf(name);
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'ready-household-certificate.pdf';
+  link.click();
+  URL.revokeObjectURL(url);
 }

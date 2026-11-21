@@ -498,45 +498,25 @@ select {
   margin-top: 0;
 }
 
-.certificate-art {
-  position: relative;
+.certificate-name-field {
+  margin: 0 0 28px;
+}
+
+.certificate-preview {
   display: grid;
   place-items: center;
-  height: 500px;
-  margin: 33px 10px 28px;
-  border: 3px double #6f8f6c;
-  background: repeating-radial-gradient(
-    circle at center,
-    rgba(90, 145, 90, 0.08) 0 2px,
-    transparent 2px 8px
-  );
-  box-shadow:
-    inset 0 0 0 8px #fff,
-    inset 0 0 0 11px #4e8d55;
+  width: 100%;
+  aspect-ratio: 2630 / 1860;
+  margin: 0 0 28px;
+  border: 1px solid #d5ddd3;
+  background: #eef1ec;
+  overflow: hidden;
 }
 
-.certificate-art span {
-  position: absolute;
-  top: 24px;
-  font-size: 30px;
-  letter-spacing: 0.06em;
-}
-
-.certificate-art strong {
-  position: absolute;
-  top: 43%;
-  font-size: 18px;
-  font-weight: 400;
-  text-align: center;
-}
-
-.certificate-art small {
-  position: absolute;
-  bottom: 28px;
-  display: block;
-  font-size: 14px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+.certificate-preview iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .certificate-buttons {
@@ -548,6 +528,18 @@ select {
 .certificate-buttons .green-button {
   flex: 1;
   font-size: 12px;
+}
+
+.green-button:disabled {
+  background: #a9afa6;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.share-text {
+  width: 100%;
+  min-width: 0;
+  margin-top: 8px;
 }
 
 @media (max-width: 700px) {
@@ -598,16 +590,6 @@ select {
   .nested {
     width: calc(100% - 18px);
     margin-left: 18px;
-  }
-
-  .certificate-art {
-    height: 280px;
-    margin-right: 0;
-    margin-left: 0;
-  }
-
-  .certificate-art span {
-    font-size: 24px;
   }
 
   .certificate-buttons {
